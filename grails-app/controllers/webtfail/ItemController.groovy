@@ -2,5 +2,5 @@ package webtfail
 
 class ItemController {
 
-    def index = { }
+    def scaffold
 }
