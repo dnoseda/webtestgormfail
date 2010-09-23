@@ -24,7 +24,7 @@ class ItemWebTests extends grails.util.WebTest {
 		}
 		
 		invoke '/item/list',description:"${Item.count()}"
-		storeXPath(xpath:'count(//table//tbody//tr)',property:"uri", description:'cantidad luego')
+		storeXPath(xpath:'count(//table//tbody//tr)',property:"delete", description:'cantidad luego')
 		verifyXPath(xpath:'count(//table//tbody//tr)>#{uri}',description:"tamaño mayor a uir:#{uri}")
 		
 		if(itemCant==itemAfterCant){
