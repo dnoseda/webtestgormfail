@@ -1,6 +1,5 @@
 package webtfail
 
 class ItemController {
-
-    def scaffold
+    def scaffold = true
 }
