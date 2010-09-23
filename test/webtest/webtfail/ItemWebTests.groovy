@@ -11,7 +11,6 @@ class ItemWebTests extends grails.util.WebTest {
 	
 	void testSomething() {
 		String descriptionValue = "cualquier cosa"
-		int itemCant = Item.count()
 		invoke '/item/list'
 		storeXPath(xpath:'count(//table//tbody//tr)',property:"uri", description:'cantidad previa')
 		clickElement(xpath:"//a[@class='create']")
@@ -19,20 +18,9 @@ class ItemWebTests extends grails.util.WebTest {
 		clickElement(xpath:"//input[@id='create']")
 		verifyXPath(xpath:"//div[@class='message']/text()='Item 1 created'")
 		int itemAfterCant=-1
-		Item.withNewSession { org.hibernate.Session session ->
-			itemAfterCant = Item.count()
-		}
 		
 		invoke '/item/list',description:"${Item.count()}"
 		storeXPath(xpath:'count(//table//tbody//tr)',property:"delete", description:'cantidad luego')
 		verifyXPath(xpath:'count(//table//tbody//tr)>#{uri}',description:"tamaño mayor a uir:#{uri}")
-		
-		if(itemCant==itemAfterCant){
-			not{
-				invoke url:"/", description:"itemCant=${itemCant} itemAfterCant: ${itemAfterCant}"
-			}
-		}else{
-			invoke url:"/", description:"itemCant=${itemCant} itemAfterCant: ${itemAfterCant}"
-		}
 	}
 }
