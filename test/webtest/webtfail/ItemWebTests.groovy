@@ -18,7 +18,10 @@ class ItemWebTests extends grails.util.WebTest {
 		setInputField(name:'description', value:descriptionValue)
 		clickElement(xpath:"//input[@id='create']")
 		verifyXPath(xpath:"//div[@class='message']/text()='Item 1 created'")
-		int itemAfterCant = Item.count()
+		int itemAfterCant=-1
+		Item.withNewSession { org.hibernate.Session session ->
+			itemAfterCant = Item.count()
+		}
 		
 		invoke '/item/list'
 		storeXPath(xpath:'count(//table//tbody//tr)',property:"uri", description:'cantidad luego')
