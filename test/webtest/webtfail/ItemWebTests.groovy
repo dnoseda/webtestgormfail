@@ -10,13 +10,14 @@ class ItemWebTests extends grails.util.WebTest {
 	// e.g. test001XclassNameXListNewDelete
 	
 	void testSomething() {
-		int itemCant = Item.getAll().size()
+		String descriptionValue = "cualquier cosa"
+		int itemCant = Item.findAllByDescription(descriptionValue).size()
 		invoke '/item/list'
-		clickXPath(xpath:"//a[@class='create']")
-		setInputField(name:'description', value:'cualquier cosa')
+		clickElement(xpath:"//a[@class='create']")
+		setInputField(name:'description', value:descriptionValue)
 		clickElement(xpath:"//input[@id='create']")
 		verifyXPath(xpath:"//div[@class='message']/text()='Item 1 created'")
-		int itemAfterCant = Item.getAll().size()
+		int itemAfterCant = Item.findAllByDescription(descriptionValue).size()
 		if(itemCant==itemAfterCant){
 			not{
 				invoke url:"/", description:"itemCant=${itemCant} itemAfterCant: ${itemAfterCant}"
